@@ -1,5 +1,5 @@
 view: answers_test {
-  sql_table_name: (SELECT *, GENERATE_UUID() as pk FROM quizzes.answers_test ) ;;
+  sql_table_name: (SELECT *, GENERATE_UUID() as pk FROM quizzes.answers ) ;;
 
   dimension: pk {primary_key: yes type:string }
 
