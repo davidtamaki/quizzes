@@ -49,12 +49,11 @@ explore: answers {
   }
 
   join: answers_test_results {
-    view_label: "Answers Test: Results"
     sql: LEFT JOIN UNNEST([${answers.results}]) as answers_test_results ;;
     relationship: one_to_one
   }
-  join: question_all_wrong {
-    sql: LEFT JOIN UNNEST(${answers.wrong_array}) as question_all_wrong ;;
+  join: all_wrong_area_checks {
+    sql: LEFT JOIN UNNEST(${answers.wrong_array}) as all_wrong_area_checks ;;
     relationship: one_to_many
   }
 }

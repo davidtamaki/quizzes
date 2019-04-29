@@ -28,7 +28,7 @@ view: answers_test_results_sorts {
 
 view: answer_check_base {
   extension: required
-  view_label: "Answer Checks"
+  view_label: "2) Answer Checks"
   dimension: check { type: yesno sql: ${TABLE}.check ;; group_label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', ' ' | capitalize }}" label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', ' ' | capitalize }} Check"}
   dimension: wrong { type: yesno sql: NOT ${TABLE}.check ;; group_label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', ' ' | capitalize }}" label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', ' ' | capitalize }} Wrong"}
 
@@ -47,6 +47,7 @@ view: answer_check_base {
 
 
 view: answers_test_results {
+  view_label: "2) Answer Checks"
   dimension: fields {
     hidden: yes
     sql: ${TABLE}.fields ;;

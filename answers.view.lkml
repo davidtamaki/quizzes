@@ -1,10 +1,19 @@
 view: answers {
-  label: "The Quizzard Results"
+  label: "1) The Quizzard Results"
   sql_table_name: (SELECT *, GENERATE_UUID() as pk FROM quizzes.answers ) ;;
 
-  dimension: pk {primary_key: yes type:string }
+  dimension: pk {primary_key: yes hidden: yes type:string }
 
-  dimension: result_categories {type: number sql: 7 ;;}
+  dimension: is_current_user {
+    type: yesno
+    sql: ${user_id} = ${current_user::string} ;;
+  }
+
+  dimension: current_user {
+    type: number
+    sql: {{ _user_attributes['id'] }} ;;
+    hidden: yes
+  }
 
   dimension: email {
     type: string
@@ -77,7 +86,7 @@ view: answers {
   measure: users {type: count_distinct sql: ${user_id} ;; }
   measure: tries {type: count }
   measure: wrong_answers {type: count filters: { field: passed value: "No" } }
-  measure: right_answers {type: count filters: { field: passed value: "Yes"} }
+  measure: correct_answers {type: count filters: { field: passed value: "Yes"} }
 
   measure: questions_wrong {
     type: count_distinct
@@ -85,7 +94,7 @@ view: answers {
     filters: { field: passed value: "No"}
   }
 
-  measure: questions_right {
+  measure: questions_correct {
     type: count_distinct
     sql: ${question} ;;
     filters: { field: passed value: "Yes"}
@@ -93,13 +102,13 @@ view: answers {
 
   measure: percentage_complete {
     type: number
-    sql: SAFE_DIVIDE(${questions_right},${total_questions}) ;;
+    sql: SAFE_DIVIDE(${questions_correct},${total_questions}) ;;
     value_format_name: percent_1
   }
 
-  measure: right_rate {
+  measure: correct_rate {
     type: number
-    sql: SAFE_DIVIDE(${right_answers},${tries}) ;;
+    sql: SAFE_DIVIDE(${correct_answers},${tries}) ;;
     value_format_name: percent_1
   }
 
@@ -109,13 +118,13 @@ view: answers {
     value_format_name: percent_1
   }
 
-  measure: failures {
-    type: string
-    sql: STRING_AGG(${answers_test_results_vis_config.reason} ;;
-  }
-  measure: last_question_passed {
+  measure: highest_question_passed {
     type: max
     sql: ${question} ;;
     filters: {field: passed value: "Yes"}
+  }
+  measure: highest_question_tried {
+    type: max
+    sql: ${question} ;;
   }
 }
