@@ -119,108 +119,31 @@ view: answers_test {
 }
 
 view: answers_test_results_vis_config {
-  dimension: check { type: yesno sql: ${TABLE}.check ;; }
-  dimension: wrong { type: yesno sql: NOT ${TABLE}.check ;; }
-
-  dimension: reason {
-    type: string
-    sql: ${TABLE}.reason ;;
-  }
-
-  dimension: reason_wrong {
-    type: string
-    sql: CASE WHEN ${wrong} THEN ${reason} END ;;
-  }
+  extends: [answer_check_base]
 }
 
 view: answers_test_results_limit {
-  dimension: check { type: yesno sql: ${TABLE}.check ;; }
-  dimension: wrong { type: yesno sql: NOT ${TABLE}.check ;; }
-
-  dimension: reason {
-    type: string
-    sql: ${TABLE}.reason ;;
-  }
-
-  dimension: reason_wrong {
-    type: string
-    sql: CASE WHEN ${wrong} THEN ${reason} END ;;
-  }
+  extends: [answer_check_base]
 }
 
 view: answers_test_results_num_rows {
-  dimension: check { type: yesno sql: ${TABLE}.check ;; }
-  dimension: wrong { type: yesno sql: NOT ${TABLE}.check ;; }
-
-  dimension: reason {
-    type: string
-    sql: ${TABLE}.reason ;;
-  }
-
-  dimension: reason_wrong {
-    type: string
-    sql: CASE WHEN ${wrong} THEN ${reason} END ;;
-  }
+  extends: [answer_check_base]
 }
 
 view: answers_test_results_filters {
-  dimension: check { type: yesno sql: ${TABLE}.check ;; }
-  dimension: wrong { type: yesno sql: NOT ${TABLE}.check ;; }
-
-  dimension: reason {
-    type: string
-    sql: ${TABLE}.reason ;;
-  }
-
-  dimension: reason_wrong {
-    type: string
-    sql: CASE WHEN ${wrong} THEN ${reason} END ;;
-  }
+  extends: [answer_check_base]
 }
 
 view: answers_test_results_fields {
-  dimension: check { type: yesno sql: ${TABLE}.check ;; }
-  dimension: wrong { type: yesno sql: NOT ${TABLE}.check ;; }
-
-  dimension: reason {
-    type: string
-    sql: ${TABLE}.reason ;;
-  }
-
-  dimension: reason_wrong {
-    type: string
-    sql: CASE WHEN ${wrong} THEN ${reason} END ;;
-  }
+  extends: [answer_check_base]
 }
 
 view: answers_test_results_pivots {
-  dimension: check { type: yesno sql: ${TABLE}.check ;; }
-  dimension: wrong { type: yesno sql: NOT ${TABLE}.check ;; }
-
-  dimension: reason {
-    type: string
-    sql: ${TABLE}.reason ;;
-  }
-
-  dimension: reason_wrong {
-    type: string
-    sql: CASE WHEN ${wrong} THEN ${reason} END ;;
-  }
+  extends: [answer_check_base]
 }
 
 view: answers_test_results_sorts {
-  dimension: check { type: yesno sql: ${TABLE}.check ;; }
-  dimension: wrong { type: yesno sql: NOT ${TABLE}.check ;; }
-
-  dimension: reason {
-    type: string
-    sql: ${TABLE}.reason ;;
-  }
-
-  dimension: reason_wrong {
-    type: string
-    sql: CASE WHEN ${wrong} THEN ${reason} END ;;
-  }
+  extends: [answer_check_base]
 }
 
 view: answers_test_results {
@@ -257,5 +180,24 @@ view: answers_test_results {
   dimension: vis_config {
     hidden: yes
     sql: ${TABLE}.vis_config ;;
+  }
+}
+
+view: answer_check_base {
+  extension: required
+  view_label: "Answer Checks"
+  dimension: check { type: yesno sql: ${TABLE}.check ;; group_label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }}" label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }} Check"}
+  dimension: wrong { type: yesno sql: NOT ${TABLE}.check ;; group_label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }}" label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }} Wrong"}
+
+  dimension: reason {
+    group_label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }}" label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }} Reason"
+    type: string
+    sql: ${TABLE}.reason ;;
+  }
+
+  dimension: reason_wrong {
+    group_label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }}" label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }} Reason Wrong"
+    type: string
+    sql: CASE WHEN ${wrong} THEN ${reason} END ;;
   }
 }
