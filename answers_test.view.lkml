@@ -146,6 +146,26 @@ view: answers_test_results_sorts {
   extends: [answer_check_base]
 }
 
+view: answer_check_base {
+  extension: required
+  view_label: "Answer Checks"
+  dimension: check { type: yesno sql: ${TABLE}.check ;; group_label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }}" label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }} Check"}
+  dimension: wrong { type: yesno sql: NOT ${TABLE}.check ;; group_label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }}" label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }} Wrong"}
+
+  dimension: reason {
+    group_label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }}" label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }} Reason"
+    type: string
+    sql: ${TABLE}.reason ;;
+  }
+
+  dimension: reason_wrong {
+    group_label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }}" label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }} Reason Wrong"
+    type: string
+    sql: CASE WHEN ${wrong} THEN ${reason} END ;;
+  }
+}
+
+
 view: answers_test_results {
   dimension: fields {
     hidden: yes
@@ -180,24 +200,5 @@ view: answers_test_results {
   dimension: vis_config {
     hidden: yes
     sql: ${TABLE}.vis_config ;;
-  }
-}
-
-view: answer_check_base {
-  extension: required
-  view_label: "Answer Checks"
-  dimension: check { type: yesno sql: ${TABLE}.check ;; group_label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }}" label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }} Check"}
-  dimension: wrong { type: yesno sql: NOT ${TABLE}.check ;; group_label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }}" label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }} Wrong"}
-
-  dimension: reason {
-    group_label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }}" label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }} Reason"
-    type: string
-    sql: ${TABLE}.reason ;;
-  }
-
-  dimension: reason_wrong {
-    group_label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }}" label: "{{ _view._name | replace: 'answers_test_results_', '' | replace: '_', '' | capitalize }} Reason Wrong"
-    type: string
-    sql: CASE WHEN ${wrong} THEN ${reason} END ;;
   }
 }
