@@ -10,7 +10,9 @@ datagroup: quizzes_default_datagroup {
 
 persist_with: quizzes_default_datagroup
 
-explore: answers_test {
+explore: answers {
+  persist_for: "0 minutes"
+  label: "The Quizzard Answers"
   join: answers_test_results_vis_config {
     sql: LEFT JOIN UNNEST([${answers_test_results.vis_config}]) as answers_test_results_vis_config ;;
     relationship: one_to_one
@@ -48,11 +50,11 @@ explore: answers_test {
 
   join: answers_test_results {
     view_label: "Answers Test: Results"
-    sql: LEFT JOIN UNNEST([${answers_test.results}]) as answers_test_results ;;
+    sql: LEFT JOIN UNNEST([${answers.results}]) as answers_test_results ;;
     relationship: one_to_one
   }
   join: question_all_wrong {
-    sql: LEFT JOIN UNNEST(${answers_test.wrong_array}) as question_all_wrong ;;
+    sql: LEFT JOIN UNNEST(${answers.wrong_array}) as question_all_wrong ;;
     relationship: one_to_many
   }
 }
