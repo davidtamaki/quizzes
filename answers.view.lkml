@@ -36,6 +36,7 @@ view: answers {
   }
 
   dimension: scheduled_plan_id {
+    hidden: yes
     type: number
     sql: ${TABLE}.scheduled_plan_id ;;
   }
@@ -46,11 +47,13 @@ view: answers {
   }
 
   dimension: url {
+    hidden: yes
     type: string
     sql: ${TABLE}.url ;;
   }
 
   dimension: user_id {
+    hidden: yes
     type: string
     sql: ${TABLE}.user_id ;;
   }
@@ -82,7 +85,7 @@ view: answers {
 
   dimension: all_wrong_reasons {type: string sql: ARRAY_TO_STRING(${wrong_array},', ') ;; }
 
-  measure: total_questions {type: max sql: 18 ;; }
+  measure: total_questions {type: max sql: 8 ;; }
   measure: users {type: count_distinct sql: ${user_id} ;; }
   measure: tries {type: count }
   measure: wrong_answers {type: count filters: { field: passed value: "No" } }
