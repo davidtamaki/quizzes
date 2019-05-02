@@ -30,11 +30,13 @@ view: answers {
     type: string
     sql: CONCAT('Question ',${TABLE}.question) ;;
     order_by_field: question
+    link: {label: "See Wrong Reasons" url: "{{drill_common_wrong_reasons._link}}"}
   }
 
   dimension: question {
     type: number
     sql: CAST(${TABLE}.question AS INT64) ;;
+    link: {label: "See Wrong Reasons" url: "{{drill_common_wrong_reasons._link}}"}
   }
 
   dimension: question_passed {
@@ -143,7 +145,7 @@ view: answers {
     type: number
     sql: SAFE_DIVIDE(${correct_tries},${tries}) ;;
     value_format_name: percent_1
-    link: {label: "See Wrong Reasons" url: "{{drill_common_wrong_reasons._link}}"}
+    link: {label: "See Wrong Reasons" url: "{% if question._is_selected or question_string._is_selected %}{% else %}{{drill_common_wrong_reasons._link}}{% endif %}"}
   }
 
   measure: wrong_rate {
