@@ -1,17 +1,18 @@
-connection: "bfw_bq"
+connection: "david_bq_quizzard"
 
 # include all the views
 include: "*.view"
+include: "quizzard_leaderboard.dashboard"
 
 datagroup: quizzes_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
   max_cache_age: "1 hour"
 }
 
-persist_with: quizzes_default_datagroup
+
 
 explore: answers {
-  persist_for: "0 minutes"
+  persist_with: quizzes_default_datagroup
   label: "The Quizzard Answers"
   join: answers_test_results_vis_config {
     sql: LEFT JOIN UNNEST([${answers_test_results.vis_config}]) as answers_test_results_vis_config ;;

@@ -7,8 +7,7 @@
     model: quizzes
     explore: answers
     type: single_value
-    fields: [answers.total_questions, answers.tries, answers.questions_right, answers.wrong_answers,
-      answers.right_answers]
+    fields: [answers.total_questions, answers.tries]
     limit: 500
     series_types: {}
     hidden_fields: []
@@ -22,7 +21,7 @@
     model: quizzes
     explore: answers
     type: single_value
-    fields: [answers.total_questions, answers.tries, answers.wrong_answers]
+    fields: [answers.total_questions, answers.tries]
     limit: 500
     series_types: {}
     hidden_fields: [answers.total_questions]
@@ -56,7 +55,6 @@
       'No': Wrong
       'Yes': Correct
     series_types: {}
-    hidden_fields: [answers.questions_right]
     y_axes: []
     title_hidden: true
     listen: {}
@@ -273,4 +271,3 @@
     col: 7
     width: 6
     height: 5
-

@@ -1,6 +1,6 @@
 view: answers {
   label: "1) The Quizzard Results"
-  sql_table_name: quizzes.answers_new ;;
+  sql_table_name: quizzes.results ;;
 
   dimension: pk {primary_key: yes hidden: yes type:string }
 
