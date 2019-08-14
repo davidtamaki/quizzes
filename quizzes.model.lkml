@@ -1,8 +1,7 @@
 connection: "david_bq_quizzard"
 
-# include all the views
 include: "*.view"
-include: "quizzard_leaderboard.dashboard"
+# include: "quizzard_leaderboard.dashboard" # using https://dcltraining.dev.looker.com/dashboards/28
 
 datagroup: quizzes_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;

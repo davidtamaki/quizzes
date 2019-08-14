@@ -25,25 +25,14 @@ view: answers {
     sql: ${TABLE}.passed ;;
   }
 
-  dimension: question_string {
-    hidden: yes
-    type: string
-    sql: CONCAT('Question ',${TABLE}.question) ;;
-    order_by_field: question
-    link: {
-      label: "See Wrong Reasons"
-      url: "{{drill_common_wrong_reasons._link}}"
-      }
-  }
-
   dimension: quiz_name {
     type: string
     sql: ${TABLE}.quiz_name ;;
   }
 
   dimension: question {
-    type: number
-    sql: CAST(${TABLE}.question AS INT64) ;;
+    type: string
+    sql: ${TABLE}.question ;;
     link: {
       label: "See Wrong Reasons"
       url: "{{drill_common_wrong_reasons._link}}"
@@ -51,7 +40,7 @@ view: answers {
   }
 
   dimension: question_passed {
-    type: number
+    type: string
     sql: CASE WHEN ${passed} THEN ${question} END ;;
   }
 
@@ -122,7 +111,7 @@ view: answers {
   measure: total_questions {
     type: count_distinct
     sql: ${question} ;;
-    drill_fields: [question_string, tries, correct_rate, users_with_correct, users_with_wrong]}
+    drill_fields: [question, tries, correct_rate, users_with_correct, users_with_wrong]}
 
   measure: users {
     type: count_distinct
@@ -211,7 +200,7 @@ view: answers {
     value_format_name: percent_1
     link: {
       label: "See Wrong Reasons"
-      url: "{% if question._is_selected or question_string._is_selected %}{% else %}{{drill_common_wrong_reasons._link}}{% endif %}"
+      url: "{% if question._is_selected %}{% else %}{{drill_common_wrong_reasons._link}}{% endif %}"
       }
   }
 
