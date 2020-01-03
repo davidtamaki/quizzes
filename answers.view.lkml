@@ -107,6 +107,11 @@ view: answers {
     sql: ARRAY_TO_STRING(${wrong_array},', ') ;;
   }
 
+  measure: last_submission_date {
+    type: date
+    sql: MAX(${submitted_date}) ;;
+  }
+
   # todo need a better way to do this (only counts when question has been attempted)
   measure: total_questions {
     type: count_distinct
