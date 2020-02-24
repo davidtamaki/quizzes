@@ -109,7 +109,7 @@ view: answers {
 
   measure: last_submission_date {
     type: date
-    sql: MAX(${submitted_date}) ;;
+    sql: MAX(${submitted_raw}) ;;
   }
 
   # todo need a better way to do this (only counts when question has been attempted)
