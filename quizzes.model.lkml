@@ -1,4 +1,4 @@
-connection: "david_bq_quizzard"
+connection: "bq-davids-thequizzard"
 
 include: "*.view"
 # include: "quizzard_leaderboard.dashboard" # using https://dcltraining.dev.looker.com/dashboards/28
